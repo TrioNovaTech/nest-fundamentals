@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from './entities/coffee.entity';
 
 @Injectable()
@@ -20,7 +20,13 @@ export class CoffeesService {
     }
 
     findOne(id: string) {
-        return this.coffees.find(item => item.id === +id)
+        const coffee = this.coffees.find(item => item.id === +id)
+        if (!coffee) {
+            // HttpException takes two parameters, one being a string for error response message and the other is the status code we want to send
+            // throw new HttpException(`Coffee #${id} not found`, HttpStatus.NOT_FOUND);
+            throw new NotFoundException(`Coffee #${id} not found`)
+        }
+        return coffee
     }
 
     create(createCoffeeDto: any) {

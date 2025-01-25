@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Res } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -73,9 +75,9 @@ export class CoffeesController {
         return body;
     }
     */
-    create(@Body() body) {
+    create(@Body() createCoffeeDto: CreateCoffeeDto) {
         // return body;
-        return this.coffeesService.create(body)
+        return this.coffeesService.create(createCoffeeDto)
     }
 
     /* 
@@ -88,9 +90,9 @@ export class CoffeesController {
     // patch operation does a partial update of a single resource,
     // it require both id and the payload, representing all the possible values for a given resource
     // for this, we take advantage of both Param and Body decorators 
-    update(@Param('id') id: string, @Body() body) {
+    update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
         // return `this action updates #${id} coffee`
-        return this.coffeesService.update(id, body)
+        return this.coffeesService.update(id, updateCoffeeDto)
     }
 
     @Delete(':id')
